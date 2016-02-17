@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(require('express').static('./public'));
 
-schedule.scheduleJob({hour: 18, minute: 30, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
+schedule.scheduleJob({hour: 19, minute: 00, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
     console.log('running job');
     client.smembers('numbers', (err, phones) => {
         if (err) {
@@ -41,7 +41,7 @@ app.post('/handle', (req, res, next) => {
             console.log('phone ', phone, 'pushed to redis');
             res.type('text/html');
             res.render('twiml', {
-                message: _.sample(jokes),
+                message: '\n' + _.sample(jokes),
             });
         });
     } else {

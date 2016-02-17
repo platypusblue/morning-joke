@@ -19,11 +19,20 @@ img.left, img.right {
 	-webkit-transform-origin:50% 50%;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
+	position: relative;
 }
 img.left {
 	-webkit-animation-name: left;
+	float: left;
+	margin-left: 15%;
 }
 
 img.right {
 	-webkit-animation-name: right;
+	float: right;
+	margin-right: 15%;
+}
+
+.msg {
+    font-size: 1.5em;
 }
