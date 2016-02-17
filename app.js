@@ -2,7 +2,7 @@ var twilio = require('twilio');
 var app = require('express')();
 var _ = require('lodash');
 var bodyParser = require('body-parser');
-var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+var rtg   = require("url").parse(process.env.REDIS_URL);
 var redis = require('redis').createClient(rtg.port, rtg.hostname);
 redis.auth(rtg.auth.split(":")[1]);
 
