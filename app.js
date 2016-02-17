@@ -17,7 +17,7 @@ app.post('/handle', (req, res) => {
     var phone = req.body.From;
     var msg = req.body.Body || '';
     if (msg.toLowerCase() === 'lol') {
-        redis.rpush(['phones', phone], (err, reply) {
+        redis.rpush(['phones', phone], (err, reply) => {
             if (err) {
                 console.err('something wrong', err);
                 return next(err);
