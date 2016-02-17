@@ -35,7 +35,7 @@ app.post('/handle', (req, res) => {
     if (msg.toLowerCase() === 'lol') {
         redis.sadd(['phones', phone], (err, reply) => {
             if (err) {
-                console.err('something wrong', err);
+                console.log('something wrong', err);
                 return next(err);
             }
             console.log('phone ', phone, 'pushed to redis');
