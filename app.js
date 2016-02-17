@@ -17,7 +17,7 @@ app.use(require('express').static('./public'));
 
 schedule.scheduleJob({hour: 18, minute: 30, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
     console.log('running job');
-    client.smembers('phones', (err, phones) => {
+    client.smembers('numbers', (err, phones) => {
         if (err) {
             return;
         }
@@ -29,11 +29,11 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.post('/handle', (req, res) => {
+app.post('/handle', (req, res, next) => {
     var phone = req.body.From;
     var msg = req.body.Body || '';
     if (msg.toLowerCase() === 'lol') {
-        redis.sadd(['phones', phone], (err, reply) => {
+        redis.sadd(['numbers', phone], (err, reply) => {
             if (err) {
                 console.log('something wrong', err);
                 return next(err);
