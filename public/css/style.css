@@ -1,0 +1,29 @@
+@-webkit-keyframes left {
+	0% {  transform: rotate(-40deg); }
+	25% {  transform: rotate(-20deg); }
+	50% { transform: rotate(0deg);}
+	75% { transform: rotate(-20deg);}
+	100% { transform: rotate(-40deg);}
+}
+
+@-webkit-keyframes right {
+	0% {  transform: rotate(40deg); }
+	25% {  transform: rotate(20deg); }
+	50% { transform: rotate(0deg);}
+	75% { transform: rotate(20deg);}
+	100% { transform: rotate(40deg);}
+}
+
+img.left, img.right {
+	-webkit-animation-duration: 1000ms;
+	-webkit-transform-origin:50% 50%;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+img.left {
+	-webkit-animation-name: left;
+}
+
+img.right {
+	-webkit-animation-name: right;
+}

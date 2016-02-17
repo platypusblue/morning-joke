@@ -8,27 +8,32 @@ var schedule = require('node-schedule');
 redis.auth(rtg.auth.split(":")[1]);
 
 var client = new twilio.RestClient(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
-var jokes = ['toc toc'];
+var jokes = ['Q:  Why do orange melons always have church weddings?\nA:  Because they cantaloupe.'];
 
 app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(require('express').static('./public'));
 
-schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
-    client.lrange('phones', 0, -1, (err, phones) => {
+schedule.scheduleJob({hour: 18, minute: 30, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
+    console.log('running job');
+    client.smembers('phones', (err, phones) => {
         if (err) {
-            console.log('job failed', err);
             return;
         }
         phones.map(sendJoke);
     });
 });
 
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
 app.post('/handle', (req, res) => {
     var phone = req.body.From;
     var msg = req.body.Body || '';
     if (msg.toLowerCase() === 'lol') {
-        redis.rpush(['phones', phone], (err, reply) => {
+        redis.sadd(['phones', phone], (err, reply) => {
             if (err) {
                 console.err('something wrong', err);
                 return next(err);
