@@ -17,7 +17,7 @@ app.use(require('express').static('./public'));
 
 schedule.scheduleJob({hour: 9, minute: 00, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
     console.log('running job');
-    client.smembers('numbers', (err, phones) => {
+    redis.smembers('numbers', (err, phones) => {
         if (err) {
             return;
         }
