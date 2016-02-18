@@ -5,17 +5,17 @@ var bodyParser = require('body-parser');
 var rtg   = require("url").parse(process.env.REDIS_URL);
 var redis = require('redis').createClient(rtg.port, rtg.hostname);
 var schedule = require('node-schedule');
+var jokes = require('./jokes')
 redis.auth(rtg.auth.split(":")[1]);
 
 var client = new twilio.RestClient(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
-var jokes = ['Q:  Why do orange melons always have church weddings?\nA:  Because they cantaloupe.'];
 
 app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(require('express').static('./public'));
 
-schedule.scheduleJob({hour: 19, minute: 00, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
+schedule.scheduleJob({hour: 9, minute: 00, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, () => {
     console.log('running job');
     client.smembers('numbers', (err, phones) => {
         if (err) {
